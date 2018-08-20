@@ -23,7 +23,7 @@ CD to the root project directory
 
 ```console
 Configure Artifactory:
-> jfrog rt c
+> jfrog rt configure
 
 We'll build this project only once with the --no-registry option, to bypass Artifactory.
 We're bypassing Artifactory to fetch the project dependencies from github.
@@ -31,17 +31,17 @@ We're bypassing Artifactory to fetch the project dependencies from github.
 
 Now that we fetched the project dependencies from github, let's push them to Artifactory.
 Future builds will not need to run this command and also the previous one.
-> jfrog rt gp go-local --self=false --deps=ALL
+> jfrog rt go-publish go-local --self=false --deps=ALL
 
 Build the project with go and resolve the project dependencies from Artifactory.
 > jfrog rt go build go-virtual 
 
 Publish the package we build to Artifactory.
-> jfrog rt gp go-local v1.0.0 --build-name=my-build --build-number=1
+> jfrog rt go-publish go-local v1.0.0 --build-name=my-build --build-number=1
 
 Collect environment variabkes and add them to the build info.
-> jfrog rt bce my-build 1
+> jfrog rt build-collect-env my-build 1
 
 Publish the build info to Artifactory.
-> jfrog rt bp my-build 1
+> jfrog rt build-publish my-build 1
 ```
