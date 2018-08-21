@@ -60,18 +60,43 @@ Depending on your scenario, you might want to package your source files as a Go 
 
 `> jfrog rt go-publish go v1.0.0 --build-name=my-build --build-number=1`
 
-2. Collect environment variabkes and add them to the build info.
+2. Collect environment variabkes and add them to the build info
 
 `> jfrog rt build-collect-env my-build 1`
 
-3. Publish the build info to Artifactory.
+3. Publish the build info to Artifactory
 
 `> jfrog rt build-publish my-build 1`
 
+4. Now you can navigate to see the build in Artifactory by using the link in the console log.
+
 ### Create and publish a Go binary to Artifactory
-Another (more common) use-case is to create a binary executable and publish it to Artifactory. We recommend using the exellent [GoReleaser](https://goreleaser.com/) tool for that. Check the documentation of GoReleaser to get started and the [Artifactory](https://goreleaser.com/customization/#Artifactory) section to add the right deployment target. 
+Another (more common) use-case is to create a binary executable and publish it to Artifactory. 
 
-* You'll need a generic repository for the executables. Click Local Repository under *Create Repositories* in your username drop-down menu in Artifactory UI, and select Generic.
+We recommend using the exellent [GoReleaser](https://goreleaser.com/) tool for that. Check the documentation of GoReleaser to install it. 
 
+Although GoReleaser has [a built-in support for Artifactory](https://goreleaser.com/customization/#Artifactory), we will use the JFrog CLI for actual deployment, and that to include the deployed artifacts in the build info metadata. 
 
-*//TODO add build-info to goreleaser artifacts**
+1. First, you'll need a generic repository for the executables. Click Local Repository under *Create Repositories* in your username drop-down menu in Artifactory UI, and select Generic. We'll call it `binary-releases-local`.
+
+2. Next, let's init GoReleaser
+
+`> goreleaser init`
+
+3. Now let's create the binaries. We'll run GoReleaser with `--snapshot` flag to generate the binaries, but skip the deployment.
+
+`> goreleaser --snapshot`
+
+4. Once the binaries are generated, let's deploy them to Artifactory with the build information
+
+`> jfrog rt upload "dist/*.tar.gz" binary-releases-local --build-name=my-build --build-number=1`
+
+5. Collect environment variabkes and add them to the build info
+
+`> jfrog rt build-collect-env my-build 1`
+
+6. Publish the build info to Artifactory
+
+`> jfrog rt build-publish my-build 1`
+
+7. Now you can navigate to see the build in Artifactory by using the link in the console log.
