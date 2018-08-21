@@ -64,4 +64,7 @@ Publish the build info to Artifactory.
 ### Create and publish a Go binary to Artifactory
 Another (more common) usecase is to create a binary executable and publish it to Artifactory. We recommend using the exellent [GoReleaser](https://goreleaser.com/) tool for that. Check the documentation of GoReleaser to get started and the [Artifactory](https://goreleaser.com/customization/#Artifactory) section to add the right deployment target. 
 
+* You'll need a generic repository for the executables. Click Local Repository under *Create Repositories* in your username drop-down menu in Artifactory UI, and select Generic.
+
+
 *//TODO add build-info to goreleaser artifacts**
