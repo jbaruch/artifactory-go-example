@@ -36,8 +36,7 @@ The build will probably error, failing to find one of the needed dependencies:
 
 That makes sense, the packages modules do not exist in the remote repository (GitHub). No despare, we can package them ourselves, and serve from a local repository instead. Whoever builds after us, won't know the difference!
 
-3. Now let's build this project only once with the --no-registry option, to bypass Artifactory.
-We're bypassing Artifactory to fetch the project dependency *sources* from GitHub (since we learned there are no modules pre-built for those dependencies).
+3. We'll switch to a "legacy" mode, in which Go will use the GitHub project sources instead of published modules. Let's build this project only once with the `--no-registry` option, to get the dependency *sources* from GitHub and let Go create modules out of them.
 
 `> jfrog rt go build --no-registry`
 
