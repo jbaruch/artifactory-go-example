@@ -49,22 +49,22 @@ We're bypassing Artifactory to fetch the project dependency *sources* from GitHu
 
 6. [Optional] to verify that you can use the modules from Artifactory now, you can delete the modules from the local cache (located at `$GO_PATH/pkg/mod`). In this case they will be resolved from Artifactory in the next step.
 
-7. Build the project with Go and resolve the uncached dependencies from Artifactory. If you deleted the cache, you'll see the `go: downloading` messages when go downloads the missing dependencies from Artifactory.
+7. Build the project with Go and resolve the uncached dependencies from Artifactory. If you deleted the cache, you'll see the `go: downloading` messages when go downloads the missing dependencies from Artifactory. This will also declare the used dependencies in [Artifactory Build Integration](https://www.jfrog.com/confluence/display/RTF/Build+Integration) build-info metadata.
 
-`> jfrog rt go build go`
+`> jfrog rt go build go --build-name=my-build --build-number=1`
 
 ### Create and publish a Go module to Artifactory
 Depending on your scenario, you might want to package your source files as a Go module and publish it to Artficatory to be used as a dependency, by you, or other team members.
 
-1. Publish the package we build to Artifactory.
+1. Publish the package we build to Artifactory. Build-info will record the uploaded module as an artifact
 
 `> jfrog rt go-publish go v1.0.0 --build-name=my-build --build-number=1`
 
-2. Collect environment variabkes and add them to the build info
+2. Collect environment variabkes and add them to the build-info
 
 `> jfrog rt build-collect-env my-build 1`
 
-3. Publish the build info to Artifactory
+3. Publish the build-info to Artifactory
 
 `> jfrog rt build-publish my-build 1`
 
@@ -75,7 +75,7 @@ Another (more common) use-case is to create a binary executable and publish it t
 
 We recommend using the exellent [GoReleaser](https://goreleaser.com/) tool for that. Check the documentation of GoReleaser to install it. 
 
-Although GoReleaser has [a built-in support for Artifactory](https://goreleaser.com/customization/#Artifactory), we will use the JFrog CLI for actual deployment, and that to include the deployed artifacts in the build info metadata. 
+Although GoReleaser has [a built-in support for Artifactory](https://goreleaser.com/customization/#Artifactory), we will use the JFrog CLI for actual deployment, and that to include the deployed artifacts in the build info metadata. (Note: pull request for build info support in GoReleaser is on its way)
 
 1. First, you'll need a generic repository for the executables. Click Local Repository under *Create Repositories* in your username drop-down menu in Artifactory UI, and select Generic. We'll call it `binary-releases-local`.
 
