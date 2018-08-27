@@ -26,6 +26,7 @@ In the root directory of the project, perform the following steps:
 
 2. Once the JFrog CLI is configured with Artifactory, we can try and build our project, resolving the dependencies from Artifactory, hoping it will find the modules in GitHub using the remote repository proxing functionality (we'll use the *go*, which includes *go-remote*):
 
+`> cd hello`
 `> jfrog rt go build go`
 
 The build will probably error, failing to find one of the needed dependencies:
