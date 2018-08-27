@@ -10,6 +10,7 @@ To work with Go repositories you need to use [JFrog CLI](https://www.jfrog.com/c
 * Install [JFrog CLI](https://jfrog.com/getcli/)
 * Make sure your Artifactory version is 5.11.0 or above
 * Make sure your JFrog CLI version is 1.18.0 or above
+* Fork and clone this project
 
 ## Running the Example
 ### Create Go Repositories in Artifactory
