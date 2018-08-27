@@ -5,7 +5,7 @@ Go repositories are supported by Artifactory since version 5.11.0.
 To work with Go repositories you need to use [JFrog CLI](https://www.jfrog.com/confluence/display/CLI/CLI+for+JFrog+Artifactory) and the Go client.
 
 ## Prerequisites
-* Install version 1.11 or above of Go (before Go 1.11 is released, please install one of its release candidates).
+* Install version 1.11 or above of Go.
 * Make sure the **go** command is in your PATH.
 * Install [JFrog CLI](https://jfrog.com/getcli/)
 * Make sure your Artifactory version is 5.11.0 or above
