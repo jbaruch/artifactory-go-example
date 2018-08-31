@@ -18,11 +18,11 @@ To work with Go repositories you need to use [JFrog CLI](https://www.jfrog.com/c
 ### Resolve Dependencies and Build the Project Using JFrog CLI
 In the root directory of the project, perform the following steps:
 
-1. Configure Artifactory. Follow the prompts of the `config` command: 
+1. Configure Artifactory. Follow the prompts of the `config` command:
 
 `> jfrog rt config`
 
-2. Once the JFrog CLI is configured with Artifactory, we can try and build our project, resolving the dependencies from Artifactory, hoping it will find the modules in GitHub using the remote repository proxing functionality (we'll use the *go*, which includes *go-remote*):
+2. Once the JFrog CLI is configured with Artifactory, we can try and build our project, resolving the dependencies from Artifactory, hoping it will find the modules in GitHub using the remote repository proxying functionality (we'll use the *go*, which includes *go-remote*):
 
 ```> cd hello
 > jfrog rt go build go
@@ -35,13 +35,13 @@ The build will probably error, failing to find one of the needed dependencies:
 > [Error] exit status 1
 ```
 
-That makes sense, the packages modules do not exist in the remote repository (GitHub). No despare, we can package them ourselves, and serve from a local repository instead. Whoever builds after us, won't know the difference!
+That makes sense, the packages modules do not exist in the remote repository (GitHub). No despair, we can package them ourselves, and serve from a local repository instead. Whoever builds after us, won't know the difference!
 
 3. We'll switch to a "legacy" mode, in which Go will use the GitHub project sources instead of published modules. Let's build this project only once with the `--no-registry` option, to get the dependency *sources* from GitHub and let Go create modules out of them.
 
 `> jfrog rt go build --no-registry`
 
-4. Now that we fetched the project dependency sources from GitHub, let's create modules out of them and push them to Artifactory. As the previous command, this needs to be only done once. Once we published the modules to Artifactory, they are there for the other developers to use. We will use the virtual repositoriy again, this time uploading files through it to *go-local*.
+4. Now that we fetched the project dependency sources from GitHub, let's create modules out of them and push them to Artifactory. As the previous command, this needs to be only done once. Once we published the modules to Artifactory, they are there for the other developers to use. We will use the virtual repository again, this time uploading files through it to *go-local*.
 
 `> jfrog rt go-publish go --self=false --deps=ALL`
 
@@ -54,13 +54,13 @@ That makes sense, the packages modules do not exist in the remote repository (Gi
 `> jfrog rt go build go --build-name=my-build --build-number=1`
 
 ### Create and publish a Go module to Artifactory
-Depending on your scenario, you might want to package your source files as a Go module and publish it to Artficatory to be used as a dependency, by you, or other team members.
+Depending on your scenario, you might want to package your source files as a Go module and publish it to Artifactory to be used as a dependency, by you, or other team members.
 
 1. Publish the package we build to Artifactory. Build-info will record the uploaded module as an artifact
 
 `> jfrog rt go-publish go v1.0.0 --build-name=my-build --build-number=1`
 
-2. Collect environment variabkes and add them to the build-info
+2. Collect environment variables and add them to the build-info
 
 `> jfrog rt build-collect-env my-build 1`
 
@@ -71,9 +71,9 @@ Depending on your scenario, you might want to package your source files as a Go 
 4. Now you can navigate to see the build in Artifactory by using the link in the console log.
 
 ### Create and publish a Go binary to Artifactory
-Another (more common) use-case is to create a binary executable and publish it to Artifactory. 
+Another (more common) use-case is to create a binary executable and publish it to Artifactory.
 
-We recommend using the exellent [GoReleaser](https://goreleaser.com/) tool for that. Check the documentation of GoReleaser to install it. 
+We recommend using the excellent [GoReleaser](https://goreleaser.com/) tool for that. Check the documentation of GoReleaser to install it.
 
 Although GoReleaser has [a built-in support for Artifactory](https://goreleaser.com/customization/#Artifactory), we will use the JFrog CLI for actual deployment, and that to include the deployed artifacts in the build info metadata. (Note: pull request for build info support in GoReleaser is on its way)
 
@@ -91,7 +91,7 @@ Although GoReleaser has [a built-in support for Artifactory](https://goreleaser.
 
 `> jfrog rt upload "dist/*.tar.gz" binary-releases-local --build-name=my-build --build-number=1`
 
-5. Collect environment variabkes and add them to the build info
+5. Collect environment variables and add them to the build info
 
 `> jfrog rt build-collect-env my-build 1`
 
