@@ -10,3 +10,13 @@
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
+
+#output of goreleaser
+dist
+
+#jfrogcli executabe
+jfrog
+
+#exclude binary, but not source
+hello
+!hello.go
