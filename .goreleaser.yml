@@ -1,0 +1,43 @@
+project_name: artifactory-go-example
+builds:
+- env:
+  - CGO_ENABLED=0
+  goos:
+    - darwin
+    - linux
+    - windows
+  goarch:
+    - amd64
+    - arm
+    - arm64
+    - 386
+    - ppc64
+    - ppc64le
+    - mips
+    - mipsle
+    - mips64
+    - mips64le
+    - s390x
+archive:
+  replacements:
+    darwin: Darwin
+    linux: Linux
+    windows: Windows
+    386: i386
+    amd64: x86_64
+checksum:
+  name_template: 'checksums.txt'
+changelog:
+  sort: asc
+  filters:
+    exclude:
+    - '^docs:'
+    - '^test:'
+snapshot:
+  name_template: 'build-{{ .Env.CIRCLE_BUILD_NUM }}'
+
+puts:
+  - name: bintray
+    mode: archive
+    target: https://api.bintray.com/content/jbaruch/binaries/{{ .ProjectName }}/{{ .Version }}/
+    username: jbaruch
