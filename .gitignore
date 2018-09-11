@@ -16,7 +16,3 @@ dist
 
 #jfrogcli executabe
 jfrog
-
-#exclude binary, but not source
-hello
-!hello.go
